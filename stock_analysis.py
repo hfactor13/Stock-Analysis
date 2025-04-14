@@ -33,6 +33,49 @@ def _(stock_data):
     return (closing_price,)
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Splitting the data into test and training data""")
+    return
+
+
+@app.cell
+def _(closing_price):
+    # The last 90 days for the test data
+    num_days = 90
+    test = closing_price[-num_days:]
+    train = closing_price[:-num_days]
+    return num_days, test, train
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Training the Prophet model on the data""")
+    return
+
+
+@app.cell
+def _(Prophet, train):
+    model = Prophet(daily_seasonality=True)
+    model.fit(train)
+    return (model,)
+
+
+@app.cell
+def _(model, num_days):
+    future = model.make_future_dataframe(periods = num_days) # Extrapolating future values up to 90 days but this can be tweaked
+    prediction = model.predict(future)
+    prediction
+    return future, prediction
+
+
+@app.cell
+def _(prediction, test):
+    forecast = prediction[["ds", "yhat"]].join(test.set_index("ds"), on = "ds")
+    forecast
+    return (forecast,)
+
+
 @app.cell
 def _():
     return
