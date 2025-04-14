@@ -77,6 +77,18 @@ def _(prediction, test):
 
 
 @app.cell
+def _(forecast, plt, ticker):
+    plt.figure(figsize = (10, 5))
+    plt.plot(forecast["ds"], forecast["y"], label = "Actual")
+    plt.plot(forecast["ds"], forecast["yhat"], label = "Predicted")
+    plt.legend()
+    plt.title(f"{ticker} Forecasted vs. Actual")
+    plt.grid(True)
+    plt.show()
+    return
+
+
+@app.cell
 def _():
     return
 
