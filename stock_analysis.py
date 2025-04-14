@@ -10,9 +10,19 @@ def _():
     from prophet import Prophet
     import yfinance as yf
     import pandas as pd
+    import numpy as np
     import matplotlib.pyplot as plt
     import marimo as mo
-    return Prophet, mean_absolute_error, mean_squared_error, mo, pd, plt, yf
+    return (
+        Prophet,
+        mean_absolute_error,
+        mean_squared_error,
+        mo,
+        np,
+        pd,
+        plt,
+        yf,
+    )
 
 
 @app.cell
@@ -71,26 +81,40 @@ def _(model, num_days):
 
 @app.cell
 def _(prediction, test):
-    forecast = prediction[["ds", "yhat"]].join(test.set_index("ds"), on = "ds")
+    forecast = prediction[["ds", "yhat"]].set_index("ds").join(test.set_index("ds"))
+    forecast.dropna(subset = "y", inplace = True)
     forecast
     return (forecast,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Plot the forecasted values alongside the actual values""")
+    return
 
 
 @app.cell
 def _(forecast, plt, ticker):
     plt.figure(figsize = (10, 5))
-    plt.plot(forecast["ds"], forecast["y"], label = "Actual")
-    plt.plot(forecast["ds"], forecast["yhat"], label = "Predicted")
+    plt.plot(forecast.index, forecast["y"], label = "Actual")
+    plt.plot(forecast.index, forecast["yhat"], label = "Predicted")
     plt.legend()
     plt.title(f"{ticker} Forecasted vs. Actual")
+    plt.xlabel("Date")
+    plt.ylabel("Price")
     plt.grid(True)
     plt.show()
     return
 
 
 @app.cell
-def _():
-    return
+def _(forecast, mean_absolute_error, mean_squared_error, np):
+    mae = mean_absolute_error(forecast['y'], forecast['yhat'])
+    rmse = np.sqrt(mean_squared_error(forecast['y'], forecast['yhat']))
+
+    print(f"MAE: {mae:.2f}")
+    print(f"RMSE: {rmse:.2f}")
+    return mae, rmse
 
 
 if __name__ == "__main__":
