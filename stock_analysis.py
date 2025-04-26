@@ -30,10 +30,23 @@ def _():
     )
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Ticker Box""")
+    return
+
+
 @app.cell
-def _(yf):
+def _(mo):
+    text_box = mo.ui.text(value = "PYPL", label = "Ticker: ")
+    text_box
+    return (text_box,)
+
+
+@app.cell
+def _(text_box, yf):
     # Gets the last 5 years of data for the ticker specified
-    ticker = "PYPL"
+    ticker = text_box.value
     stock_data = yf.download(ticker, period = "5y", auto_adjust = True, multi_level_index = False)
     stock_data
     return (stock_data,)
