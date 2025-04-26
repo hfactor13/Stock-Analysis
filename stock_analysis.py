@@ -1,7 +1,10 @@
 import marimo
 
 __generated_with = "0.12.8"
-app = marimo.App(width="medium")
+app = marimo.App(
+    width="medium",
+    layout_file="layouts/stock_analysis.grid.json",
+)
 
 
 @app.cell
@@ -79,14 +82,6 @@ def _(model, num_days):
     return future, prediction
 
 
-@app.cell
-def _(prediction, test):
-    forecast = prediction[["ds", "yhat"]].set_index("ds").join(test.set_index("ds"))
-    forecast.dropna(subset = "y", inplace = True)
-    forecast
-    return (forecast,)
-
-
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""Plot the forecasted values alongside the actual values""")
@@ -94,23 +89,18 @@ def _(mo):
 
 
 @app.cell
-def _(forecast, plt, ticker):
-    plt.figure(figsize = (10, 5))
-    plt.plot(forecast.index, forecast["y"], label = "Actual")
-    plt.plot(forecast.index, forecast["yhat"], label = "Predicted")
-    plt.legend()
-    plt.title(f"{ticker} Forecasted vs. Actual")
-    plt.xlabel("Date")
-    plt.ylabel("Price")
-    plt.grid(True)
+def _(model, plt, prediction, ticker):
+    model.plot(prediction, xlabel = "Years", ylabel = "Closing Price", include_legend = True)
+    plt.title(f"{ticker} Closing Price")
+    plt.xlim()
     plt.show()
     return
 
 
 @app.cell
-def _(forecast, mean_absolute_error, mean_squared_error, np):
-    mae = mean_absolute_error(forecast['y'], forecast['yhat'])
-    rmse = np.sqrt(mean_squared_error(forecast['y'], forecast['yhat']))
+def _(closing_price, mean_absolute_error, mean_squared_error, np, prediction):
+    mae = mean_absolute_error(closing_price['y'], prediction['yhat'])
+    rmse = np.sqrt(mean_squared_error(closing_price['y'], prediction['yhat']))
 
     print(f"MAE: {mae:.2f}")
     print(f"RMSE: {rmse:.2f}")
