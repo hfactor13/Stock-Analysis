@@ -1,6 +1,8 @@
+
+
 import marimo
 
-__generated_with = "0.12.8"
+__generated_with = "0.13.2"
 app = marimo.App(
     width="medium",
     layout_file="layouts/stock_analysis.grid.json",
@@ -11,10 +13,10 @@ app = marimo.App(
 def _():
     from sklearn.metrics import mean_absolute_error, mean_squared_error
     from prophet import Prophet
+    from prophet.plot import plot_plotly, plot_components_plotly
     import yfinance as yf
     import pandas as pd
     import numpy as np
-    import matplotlib.pyplot as plt
     import marimo as mo
     return (
         Prophet,
@@ -22,8 +24,8 @@ def _():
         mean_squared_error,
         mo,
         np,
-        pd,
-        plt,
+        plot_components_plotly,
+        plot_plotly,
         yf,
     )
 
@@ -34,7 +36,7 @@ def _(yf):
     ticker = "PYPL"
     stock_data = yf.download(ticker, period = "5y", auto_adjust = True, multi_level_index = False)
     stock_data
-    return stock_data, ticker
+    return (stock_data,)
 
 
 @app.cell
@@ -58,7 +60,7 @@ def _(closing_price):
     num_days = 90
     test = closing_price[-num_days:]
     train = closing_price[:-num_days]
-    return num_days, test, train
+    return num_days, train
 
 
 @app.cell(hide_code=True)
@@ -77,9 +79,9 @@ def _(Prophet, train):
 @app.cell
 def _(model, num_days):
     future = model.make_future_dataframe(periods = num_days) # Extrapolating future values up to 90 days but this can be tweaked
-    prediction = model.predict(future)
-    prediction
-    return future, prediction
+    forecast = model.predict(future)
+    forecast
+    return (forecast,)
 
 
 @app.cell(hide_code=True)
@@ -89,22 +91,25 @@ def _(mo):
 
 
 @app.cell
-def _(model, plt, prediction, ticker):
-    model.plot(prediction, xlabel = "Years", ylabel = "Closing Price", include_legend = True)
-    plt.title(f"{ticker} Closing Price")
-    plt.xlim()
-    plt.show()
+def _(forecast, model, plot_plotly):
+    plot_plotly(model, forecast, xlabel = "Date", ylabel = "Closing Price")
     return
 
 
 @app.cell
-def _(closing_price, mean_absolute_error, mean_squared_error, np, prediction):
-    mae = mean_absolute_error(closing_price['y'], prediction['yhat'])
-    rmse = np.sqrt(mean_squared_error(closing_price['y'], prediction['yhat']))
+def _(forecast, model, plot_components_plotly):
+    plot_components_plotly(model, forecast)
+    return
+
+
+@app.cell
+def _(closing_price, forecast, mean_absolute_error, mean_squared_error, np):
+    mae = mean_absolute_error(closing_price['y'], forecast['yhat'])
+    rmse = np.sqrt(mean_squared_error(closing_price['y'], forecast['yhat']))
 
     print(f"MAE: {mae:.2f}")
     print(f"RMSE: {rmse:.2f}")
-    return mae, rmse
+    return
 
 
 if __name__ == "__main__":
