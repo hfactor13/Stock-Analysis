@@ -55,12 +55,19 @@ def _(text_box, yf):
 
 
 @app.cell
-def _(stock_data):
+def _(mo, stock_data):
+    stock_field = mo.ui.dropdown(options = stock_data.columns, value = stock_data.columns[0], label = "Stock Field: ")
+    stock_field
+    return (stock_field,)
+
+
+@app.cell
+def _(stock_data, stock_field):
     # Rename the Date and Closing Price columns (this is the format that's needed for the Prophet library)
-    closing_price = stock_data[["Close"]].reset_index()
-    closing_price.rename(columns = {"Date": "ds", "Close": "y"}, inplace = True)
-    closing_price
-    return (closing_price,)
+    data_for_analysis = stock_data[[stock_field.value]].reset_index()
+    data_for_analysis.rename(columns = {"Date": "ds", stock_field.value: "y"}, inplace = True)
+    data_for_analysis
+    return (data_for_analysis,)
 
 
 @app.cell(hide_code=True)
@@ -70,11 +77,11 @@ def _(mo):
 
 
 @app.cell
-def _(closing_price):
+def _(data_for_analysis):
     # The last 90 days for the test data
     num_days = 90
-    test = closing_price[-num_days:]
-    train = closing_price[:-num_days]
+    test = data_for_analysis[-num_days:]
+    train = data_for_analysis[:-num_days]
     return num_days, train
 
 
@@ -106,8 +113,8 @@ def _(mo):
 
 
 @app.cell
-def _(forecast, model, plot_plotly):
-    plot_plotly(model, forecast, xlabel = "Date", ylabel = "Closing Price")
+def _(forecast, model, plot_plotly, stock_field):
+    plot_plotly(model, forecast, xlabel = "Date", ylabel = f"{stock_field.value}")
     return
 
 
@@ -125,15 +132,15 @@ def _(mo):
 
 @app.cell
 def _(
-    closing_price,
+    data_for_analysis,
     forecast,
     mean_absolute_error,
     mean_squared_error,
     mo,
     np,
 ):
-    mae = mo.ui.text(value = mean_absolute_error(closing_price['y'], forecast['yhat']))
-    rmse = mo.ui.text(value = np.sqrt(mean_squared_error(closing_price['y'], forecast['yhat'])))
+    mae = mo.ui.text(value = mean_absolute_error(data_for_analysis['y'], forecast['yhat']))
+    rmse = mo.ui.text(value = np.sqrt(mean_squared_error(data_for_analysis['y'], forecast['yhat'])))
     return mae, rmse
 
 
