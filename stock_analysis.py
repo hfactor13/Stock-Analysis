@@ -18,6 +18,8 @@ def _():
     import pandas as pd
     import numpy as np
     import marimo as mo
+    import warnings
+    warnings.filterwarnings("ignore")
     return (
         Prophet,
         mean_absolute_error,
@@ -115,13 +117,35 @@ def _(forecast, model, plot_components_plotly):
     return
 
 
-@app.cell
-def _(closing_price, forecast, mean_absolute_error, mean_squared_error, np):
-    mae = mean_absolute_error(closing_price['y'], forecast['yhat'])
-    rmse = np.sqrt(mean_squared_error(closing_price['y'], forecast['yhat']))
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Calculate the Error""")
+    return
 
-    print(f"MAE: {mae:.2f}")
-    print(f"RMSE: {rmse:.2f}")
+
+@app.cell
+def _(
+    closing_price,
+    forecast,
+    mean_absolute_error,
+    mean_squared_error,
+    mo,
+    np,
+):
+    mae = mo.ui.text(value = mean_absolute_error(closing_price['y'], forecast['yhat']))
+    rmse = mo.ui.text(value = np.sqrt(mean_squared_error(closing_price['y'], forecast['yhat'])))
+    return mae, rmse
+
+
+@app.cell
+def _(mae):
+    f"Mean Absolute Error: {mae.value:.2f}"
+    return
+
+
+@app.cell
+def _(rmse):
+    f"Root Mean Squared Error: {rmse.value:.2f}"
     return
 
 

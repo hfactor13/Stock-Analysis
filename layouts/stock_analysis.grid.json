@@ -4,7 +4,7 @@
     "columns": 1,
     "rowHeight": 20,
     "maxWidth": 900,
-    "bordered": true,
+    "bordered": false,
     "cells": [
       {
         "position": null
@@ -21,38 +21,33 @@
         ]
       },
       {
+        "position": null
+      },
+      {
+        "position": null
+      },
+      {
+        "position": null
+      },
+      {
+        "position": null
+      },
+      {
+        "position": null
+      },
+      {
+        "position": null
+      },
+      {
+        "position": null
+      },
+      {
+        "position": null
+      },
+      {
         "position": [
           0,
           3,
-          1,
-          18
-        ]
-      },
-      {
-        "position": null
-      },
-      {
-        "position": null
-      },
-      {
-        "position": null
-      },
-      {
-        "position": null
-      },
-      {
-        "position": null
-      },
-      {
-        "position": null
-      },
-      {
-        "position": null
-      },
-      {
-        "position": [
-          0,
-          21,
           1,
           30
         ]
@@ -60,14 +55,33 @@
       {
         "position": [
           0,
-          51,
+          33,
           1,
-          42
+          30
         ],
         "side": "left"
       },
       {
         "position": null
+      },
+      {
+        "position": null
+      },
+      {
+        "position": [
+          0,
+          63,
+          1,
+          3
+        ]
+      },
+      {
+        "position": [
+          0,
+          66,
+          1,
+          3
+        ]
       }
     ]
   }
