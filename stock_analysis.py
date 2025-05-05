@@ -61,7 +61,7 @@ def _(mo, stock_data):
     return (stock_field,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(stock_data, stock_field):
     # Rename the Date and Closing Price columns (this is the format that's needed for the Prophet library)
     data_for_analysis = stock_data[[stock_field.value]].reset_index()
@@ -70,13 +70,13 @@ def _(stock_data, stock_field):
     return (data_for_analysis,)
 
 
-@app.cell(hide_code=True)
+@app.cell
 def _(mo):
     mo.md(r"""Splitting the data into test and training data""")
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(data_for_analysis):
     # The last 90 days for the test data
     num_days = 90
@@ -85,7 +85,7 @@ def _(data_for_analysis):
     return num_days, train
 
 
-@app.cell(hide_code=True)
+@app.cell
 def _(mo):
     mo.md(r"""Training the Prophet model on the data""")
     return
@@ -98,7 +98,7 @@ def _(Prophet, train):
     return (model,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(model, num_days):
     future = model.make_future_dataframe(periods = num_days) # Extrapolating future values up to 90 days but this can be tweaked
     forecast = model.predict(future)
@@ -106,7 +106,7 @@ def _(model, num_days):
     return (forecast,)
 
 
-@app.cell(hide_code=True)
+@app.cell
 def _(mo):
     mo.md(r"""Plot the forecasted values alongside the actual values""")
     return
@@ -124,7 +124,7 @@ def _(forecast, model, plot_components_plotly):
     return
 
 
-@app.cell(hide_code=True)
+@app.cell
 def _(mo):
     mo.md(r"""Calculate the Error""")
     return
