@@ -8,45 +8,45 @@ app = marimo.App(
     layout_file="layouts/stock_analysis.grid.json",
 )
 
-
-@app.cell
-def _():
+with app.setup:
+    # Initialization code that runs before all other cells
     from sklearn.metrics import mean_absolute_error, mean_squared_error
     from prophet import Prophet
     from prophet.plot import plot_plotly, plot_components_plotly
+    from datetime import timedelta, datetime
+    from pathlib import Path
     import yfinance as yf
     import pandas as pd
     import numpy as np
     import marimo as mo
+    import pickle
     import warnings
     warnings.filterwarnings("ignore")
-    return (
-        Prophet,
-        mean_absolute_error,
-        mean_squared_error,
-        mo,
-        np,
-        plot_components_plotly,
-        plot_plotly,
-        yf,
-    )
+
+
+@app.cell
+def _():
+    cache_path = Path("./cache")
+    cache_path.mkdir(parents = True, exist_ok = True)
+    yf.set_tz_cache_location(cache_dir = cache_path)
+    return
 
 
 @app.cell(hide_code=True)
-def _(mo):
+def _():
     mo.md(r"""Ticker Box""")
     return
 
 
 @app.cell
-def _(mo):
+def _():
     text_box = mo.ui.text(value = "PYPL", label = "Ticker: ")
     text_box
     return (text_box,)
 
 
 @app.cell
-def _(text_box, yf):
+def _(text_box):
     # Gets the last 5 years of data for the ticker specified
     ticker = text_box.value
     stock_data = yf.download(ticker, period = "5y", auto_adjust = True, multi_level_index = False)
@@ -55,7 +55,7 @@ def _(text_box, yf):
 
 
 @app.cell
-def _(mo, stock_data):
+def _(stock_data):
     stock_field = mo.ui.dropdown(options = stock_data.columns, value = stock_data.columns[0], label = "Stock Field: ")
     stock_field
     return (stock_field,)
@@ -71,7 +71,7 @@ def _(stock_data, stock_field):
 
 
 @app.cell(hide_code=True)
-def _(mo):
+def _():
     mo.md(r"""Splitting the data into test and training data""")
     return
 
@@ -86,13 +86,13 @@ def _(data_for_analysis):
 
 
 @app.cell(hide_code=True)
-def _(mo):
+def _():
     mo.md(r"""Training the Prophet model on the data""")
     return
 
 
 @app.cell
-def _(Prophet, train):
+def _(train):
     model = Prophet(daily_seasonality=True)
     model.fit(train)
     return (model,)
@@ -107,38 +107,31 @@ def _(model, num_days):
 
 
 @app.cell(hide_code=True)
-def _(mo):
+def _():
     mo.md(r"""Plot the forecasted values alongside the actual values""")
     return
 
 
 @app.cell
-def _(forecast, model, plot_plotly, stock_field):
+def _(forecast, model, stock_field):
     plot_plotly(model, forecast, xlabel = "Date", ylabel = f"{stock_field.value}")
     return
 
 
 @app.cell
-def _(forecast, model, plot_components_plotly):
+def _(forecast, model):
     plot_components_plotly(model, forecast)
     return
 
 
 @app.cell(hide_code=True)
-def _(mo):
+def _():
     mo.md(r"""Calculate the Error""")
     return
 
 
 @app.cell
-def _(
-    data_for_analysis,
-    forecast,
-    mean_absolute_error,
-    mean_squared_error,
-    mo,
-    np,
-):
+def _(data_for_analysis, forecast):
     mae = mo.ui.text(value = mean_absolute_error(data_for_analysis['y'], forecast['yhat']))
     rmse = mo.ui.text(value = np.sqrt(mean_squared_error(data_for_analysis['y'], forecast['yhat'])))
     return mae, rmse
