@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        var scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          var element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          var hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          var newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((entries) => {
+          setHeight();
+        });
+        resizeObserver.observe(obj.contentWindow.document.body);
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <marimo-mode data-mode='edit' hidden></marimo-mode>
+    <marimo-version data-version='0.13.2' hidden></marimo-version>
+    <marimo-user-config data-config='{"completion": {"activate_on_typing": true, "copilot": false}, "display": {"dataframes": "rich", "default_width": "medium", "cell_output": "below", "theme": "light", "code_editor_font_size": 14, "default_table_page_size": 10}, "formatting": {"line_length": 79}, "keymap": {"preset": "default", "overrides": {}}, "runtime": {"auto_instantiate": true, "auto_reload": "off", "reactive_tests": true, "on_cell_change": "autorun", "watcher_on_save": "lazy", "output_max_bytes": 8000000, "std_stream_max_bytes": 1000000}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "package_management": {"manager": "pip"}, "server": {"browser": "default", "follow_symlink": false}, "language_servers": {"pylsp": {"enabled": true, "enable_mypy": true, "enable_ruff": true, "enable_flake8": false, "enable_pydocstyle": false, "enable_pylint": false, "enable_pyflakes": false}}, "snippets": {"custom_paths": [], "include_default_snippets": true}}' data-overrides='{}' hidden></marimo-user-config>
+    <marimo-app-config data-config='{"width": "medium", "layout_file": "data:application/json;base64,ewogICJ0eXBlIjogImdyaWQiLAogICJkYXRhIjogewogICAgImNvbHVtbnMiOiAxLAogICAgInJvd0hlaWdodCI6IDIwLAogICAgIm1heFdpZHRoIjogOTAwLAogICAgImJvcmRlcmVkIjogZmFsc2UsCiAgICAiY2VsbHMiOiBbCiAgICAgIHsKICAgICAgICAicG9zaXRpb24iOiBudWxsCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAicG9zaXRpb24iOiBudWxsCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAicG9zaXRpb24iOiBudWxsCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAicG9zaXRpb24iOiBbCiAgICAgICAgICAwLAogICAgICAgICAgMCwKICAgICAgICAgIDEsCiAgICAgICAgICAzCiAgICAgICAgXQogICAgICB9LAogICAgICB7CiAgICAgICAgInBvc2l0aW9uIjogbnVsbAogICAgICB9LAogICAgICB7CiAgICAgICAgInBvc2l0aW9uIjogWwogICAgICAgICAgMCwKICAgICAgICAgIDMsCiAgICAgICAgICAxLAogICAgICAgICAgMgogICAgICAgIF0KICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IFsKICAgICAgICAgIDAsCiAgICAgICAgICA1LAogICAgICAgICAgMSwKICAgICAgICAgIDI4CiAgICAgICAgXQogICAgICB9LAogICAgICB7CiAgICAgICAgInBvc2l0aW9uIjogWwogICAgICAgICAgMCwKICAgICAgICAgIDMzLAogICAgICAgICAgMSwKICAgICAgICAgIDMwCiAgICAgICAgXSwKICAgICAgICAic2lkZSI6ICJsZWZ0IgogICAgICB9LAogICAgICB7CiAgICAgICAgInBvc2l0aW9uIjogbnVsbAogICAgICB9LAogICAgICB7CiAgICAgICAgInBvc2l0aW9uIjogbnVsbAogICAgICB9LAogICAgICB7CiAgICAgICAgInBvc2l0aW9uIjogWwogICAgICAgICAgMCwKICAgICAgICAgIDYzLAogICAgICAgICAgMSwKICAgICAgICAgIDMKICAgICAgICBdCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAicG9zaXRpb24iOiBbCiAgICAgICAgICAwLAogICAgICAgICAgNjYsCiAgICAgICAgICAxLAogICAgICAgICAgMwogICAgICAgIF0KICAgICAgfQogICAgXQogIH0KfQ==", "sql_output": "auto"}' hidden></marimo-app-config>
+    <marimo-server-token data-token='123' hidden></marimo-server-token>
+    <title>stock analysis</title>
+    <script type="module" crossorigin src="./assets/index-CBYlZPe-.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DQ-mLFwY.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="" data-show-code="false">import%20marimo%0A%0A__generated_with%20%3D%20%220.13.2%22%0Aapp%20%3D%20marimo.App(%0A%20%20%20%20width%3D%22medium%22%2C%0A%20%20%20%20layout_file%3D%22data%3Aapplication%2Fjson%3Bbase64%2CewogICJ0eXBlIjogImdyaWQiLAogICJkYXRhIjogewogICAgImNvbHVtbnMiOiAxLAogICAgInJvd0hlaWdodCI6IDIwLAogICAgIm1heFdpZHRoIjogOTAwLAogICAgImJvcmRlcmVkIjogZmFsc2UsCiAgICAiY2VsbHMiOiBbCiAgICAgIHsKICAgICAgICAicG9zaXRpb24iOiBudWxsCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAicG9zaXRpb24iOiBudWxsCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAicG9zaXRpb24iOiBudWxsCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAicG9zaXRpb24iOiBbCiAgICAgICAgICAwLAogICAgICAgICAgMCwKICAgICAgICAgIDEsCiAgICAgICAgICAzCiAgICAgICAgXQogICAgICB9LAogICAgICB7CiAgICAgICAgInBvc2l0aW9uIjogbnVsbAogICAgICB9LAogICAgICB7CiAgICAgICAgInBvc2l0aW9uIjogWwogICAgICAgICAgMCwKICAgICAgICAgIDMsCiAgICAgICAgICAxLAogICAgICAgICAgMgogICAgICAgIF0KICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IG51bGwKICAgICAgfSwKICAgICAgewogICAgICAgICJwb3NpdGlvbiI6IFsKICAgICAgICAgIDAsCiAgICAgICAgICA1LAogICAgICAgICAgMSwKICAgICAgICAgIDI4CiAgICAgICAgXQogICAgICB9LAogICAgICB7CiAgICAgICAgInBvc2l0aW9uIjogWwogICAgICAgICAgMCwKICAgICAgICAgIDMzLAogICAgICAgICAgMSwKICAgICAgICAgIDMwCiAgICAgICAgXSwKICAgICAgICAic2lkZSI6ICJsZWZ0IgogICAgICB9LAogICAgICB7CiAgICAgICAgInBvc2l0aW9uIjogbnVsbAogICAgICB9LAogICAgICB7CiAgICAgICAgInBvc2l0aW9uIjogbnVsbAogICAgICB9LAogICAgICB7CiAgICAgICAgInBvc2l0aW9uIjogWwogICAgICAgICAgMCwKICAgICAgICAgIDYzLAogICAgICAgICAgMSwKICAgICAgICAgIDMKICAgICAgICBdCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAicG9zaXRpb24iOiBbCiAgICAgICAgICAwLAogICAgICAgICAgNjYsCiAgICAgICAgICAxLAogICAgICAgICAgMwogICAgICAgIF0KICAgICAgfQogICAgXQogIH0KfQ%3D%3D%22%2C%0A)%0A%0Awith%20app.setup%3A%0A%20%20%20%20%23%20Initialization%20code%20that%20runs%20before%20all%20other%20cells%0A%20%20%20%20from%20sklearn.metrics%20import%20mean_absolute_error%2C%20mean_squared_error%0A%20%20%20%20from%20prophet%20import%20Prophet%0A%20%20%20%20from%20prophet.plot%20import%20plot_plotly%2C%20plot_components_plotly%0A%20%20%20%20from%20datetime%20import%20timedelta%2C%20datetime%0A%20%20%20%20from%20pathlib%20import%20Path%0A%20%20%20%20import%20yfinance%20as%20yf%0A%20%20%20%20import%20pandas%20as%20pd%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20import%20pickle%0A%20%20%20%20import%20warnings%0A%20%20%20%20warnings.filterwarnings(%22ignore%22)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20cache_path%20%3D%20Path(%22.%2Fcache%22)%0A%20%20%20%20cache_path.mkdir(parents%20%3D%20True%2C%20exist_ok%20%3D%20True)%0A%20%20%20%20yf.set_tz_cache_location(cache_dir%20%3D%20cache_path)%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_()%3A%0A%20%20%20%20mo.md(r%22%22%22Ticker%20Box%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20text_box%20%3D%20mo.ui.text(value%20%3D%20%22PYPL%22%2C%20label%20%3D%20%22Ticker%3A%20%22)%0A%20%20%20%20text_box%0A%20%20%20%20return%20(text_box%2C)%0A%0A%0A%40app.cell%0Adef%20_(text_box)%3A%0A%20%20%20%20%23%20Gets%20the%20last%205%20years%20of%20data%20for%20the%20ticker%20specified%0A%20%20%20%20ticker%20%3D%20text_box.value%0A%20%20%20%20stock_data%20%3D%20yf.download(ticker%2C%20period%20%3D%20%225y%22%2C%20auto_adjust%20%3D%20True%2C%20multi_level_index%20%3D%20False)%0A%20%20%20%20stock_data%0A%20%20%20%20return%20(stock_data%2C)%0A%0A%0A%40app.cell%0Adef%20_(stock_data)%3A%0A%20%20%20%20stock_field%20%3D%20mo.ui.dropdown(options%20%3D%20stock_data.columns%2C%20value%20%3D%20stock_data.columns%5B0%5D%2C%20label%20%3D%20%22Stock%20Field%3A%20%22)%0A%20%20%20%20stock_field%0A%20%20%20%20return%20(stock_field%2C)%0A%0A%0A%40app.cell%0Adef%20_(stock_data%2C%20stock_field)%3A%0A%20%20%20%20%23%20Rename%20the%20Date%20and%20Closing%20Price%20columns%20(this%20is%20the%20format%20that's%20needed%20for%20the%20Prophet%20library)%0A%20%20%20%20data_for_analysis%20%3D%20stock_data%5B%5Bstock_field.value%5D%5D.reset_index()%0A%20%20%20%20data_for_analysis.rename(columns%20%3D%20%7B%22Date%22%3A%20%22ds%22%2C%20stock_field.value%3A%20%22y%22%7D%2C%20inplace%20%3D%20True)%0A%20%20%20%20data_for_analysis%0A%20%20%20%20return%20(data_for_analysis%2C)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_()%3A%0A%20%20%20%20mo.md(r%22%22%22Splitting%20the%20data%20into%20test%20and%20training%20data%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(data_for_analysis)%3A%0A%20%20%20%20%23%20The%20last%2090%20days%20for%20the%20test%20data%0A%20%20%20%20num_days%20%3D%2090%0A%20%20%20%20test%20%3D%20data_for_analysis%5B-num_days%3A%5D%0A%20%20%20%20train%20%3D%20data_for_analysis%5B%3A-num_days%5D%0A%20%20%20%20return%20num_days%2C%20train%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_()%3A%0A%20%20%20%20mo.md(r%22%22%22Training%20the%20Prophet%20model%20on%20the%20data%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(train)%3A%0A%20%20%20%20model%20%3D%20Prophet(daily_seasonality%3DTrue)%0A%20%20%20%20model.fit(train)%0A%20%20%20%20return%20(model%2C)%0A%0A%0A%40app.cell%0Adef%20_(model%2C%20num_days)%3A%0A%20%20%20%20future%20%3D%20model.make_future_dataframe(periods%20%3D%20num_days)%20%23%20Extrapolating%20future%20values%20up%20to%2090%20days%20but%20this%20can%20be%20tweaked%0A%20%20%20%20forecast%20%3D%20model.predict(future)%0A%20%20%20%20forecast%0A%20%20%20%20return%20(forecast%2C)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_()%3A%0A%20%20%20%20mo.md(r%22%22%22Plot%20the%20forecasted%20values%20alongside%20the%20actual%20values%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(forecast%2C%20model%2C%20stock_field)%3A%0A%20%20%20%20plot_plotly(model%2C%20forecast%2C%20xlabel%20%3D%20%22Date%22%2C%20ylabel%20%3D%20f%22%7Bstock_field.value%7D%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(forecast%2C%20model)%3A%0A%20%20%20%20plot_components_plotly(model%2C%20forecast)%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_()%3A%0A%20%20%20%20mo.md(r%22%22%22Calculate%20the%20Error%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(data_for_analysis%2C%20forecast)%3A%0A%20%20%20%20mae%20%3D%20mo.ui.text(value%20%3D%20mean_absolute_error(data_for_analysis%5B'y'%5D%2C%20forecast%5B'yhat'%5D))%0A%20%20%20%20rmse%20%3D%20mo.ui.text(value%20%3D%20np.sqrt(mean_squared_error(data_for_analysis%5B'y'%5D%2C%20forecast%5B'yhat'%5D)))%0A%20%20%20%20return%20mae%2C%20rmse%0A%0A%0A%40app.cell%0Adef%20_(mae)%3A%0A%20%20%20%20f%22Mean%20Absolute%20Error%3A%20%7Bmae.value%3A.2f%7D%22%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(rmse)%3A%0A%20%20%20%20f%22Root%20Mean%20Squared%20Error%3A%20%7Brmse.value%3A.2f%7D%22%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
