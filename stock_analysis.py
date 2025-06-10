@@ -17,6 +17,7 @@ with app.setup:
     from yahooquery import Ticker
     import pandas as pd
     import marimo as mo
+    import subprocess
     import warnings
     warnings.filterwarnings("ignore")
 
@@ -86,14 +87,14 @@ def _(text_box):
 
 @app.cell
 def _(stock_data):
-    stock_field = mo.ui.dropdown(options = stock_data.columns[1:], value = stock_data.columns[1], label = "Stock Field: ")
+    stock_field = mo.ui.dropdown(options = stock_data.columns[1:], value = stock_data.columns[4], label = "Stock Field: ")
     stock_field
     return (stock_field,)
 
 
 @app.cell
 def _(stock_data, stock_field):
-    # Rename the Date and Closing Price columns (this is the format that's needed for the Prophet library)
+    # Rename the date and closing price columns (this is the format that's needed for the Prophet library)
     data_for_analysis = stock_data.loc[:,["date", stock_field.value]]
     data_for_analysis.rename(columns = {"date": "ds", stock_field.value: "y"}, inplace = True)
     data_for_analysis
@@ -151,6 +152,12 @@ def _(forecast, model, stock_field):
 @app.cell
 def _(forecast, model):
     plot_components_plotly(model, forecast)
+    return
+
+
+@app.cell
+def _():
+    subprocess.run(["python", "notebook2html.py"]) # converts notebook to html
     return
 
 

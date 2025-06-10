@@ -6,8 +6,8 @@ Marimo and Python wouldn't need to be installed.
 from pathlib import Path
 import subprocess
 
-html_dir = Path("./html")
+html_dir = Path("./root")
 html_dir.mkdir(parents = True, exist_ok = True)
 
-cmd = "marimo export html-wasm stock_analysis.py -o ./html/stock_analysis.html --mode edit"
+cmd = f"marimo export html-wasm stock_analysis.py -o {html_dir}/stock_analysis.html --mode edit"
 subprocess.run(cmd.split(" "))
