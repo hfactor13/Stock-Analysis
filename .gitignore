@@ -2,11 +2,11 @@
 .DS_Store
 __pycache__
 cache
-html/assets
+root/assets
 *.png
 *.ico
 .nojekyll
-html/manifest.json
-html/site.webmanifest
+root/manifest.json
+root/site.webmanifest
 __marimo__
 secrets
