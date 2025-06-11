@@ -8,5 +8,4 @@ html/assets
 .nojekyll
 html/manifest.json
 html/site.webmanifest
-__marimo__
 secrets
