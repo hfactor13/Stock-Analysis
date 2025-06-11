@@ -2,10 +2,3 @@
 .DS_Store
 __pycache__
 cache
-docs/assets
-*.png
-*.ico
-.nojekyll
-docs/manifest.json
-docs/site.webmanifest
-secrets
