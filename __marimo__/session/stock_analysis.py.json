@@ -231,7 +231,7 @@
         {
           "type": "stream",
           "name": "stdout",
-          "text": "Assets copied to root. These assets are required for the notebook to run in the browser.\nTo run the exported notebook, use:\n  python -m http.server --directory root\nThen open the URL that is printed to your terminal.\n"
+          "text": "Assets copied to docs. These assets are required for the notebook to run in the browser.\nTo run the exported notebook, use:\n  python -m http.server --directory docs\nThen open the URL that is printed to your terminal.\n"
         }
       ]
     }
