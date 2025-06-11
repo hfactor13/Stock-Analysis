@@ -27,19 +27,19 @@ def get_stock_data(symbol, cache_dir='cache', period = "5y", max_age=timedelta(d
     """
     Fetches stock data for the given symbol with caching to CSV.
     Deletes the cache file if it's older than max_age.
-    
+
     Args:
         symbol (str): Stock ticker symbol.
         cache_dir (str): Directory to store cache files.
         max_age (timedelta): Maximum cache age allowed (default = 1 day).
-    
+
     Returns:
         pd.DataFrame: Stock data.
     """
     cache_path = Path(cache_dir)
     cache_path.mkdir(parents=True, exist_ok=True)
     file_path = cache_path / f"{symbol}.csv"
-    
+
     # Check if cache exists
     if file_path.exists():
         modified_time = datetime.fromtimestamp(file_path.stat().st_mtime)
@@ -50,14 +50,14 @@ def get_stock_data(symbol, cache_dir='cache', period = "5y", max_age=timedelta(d
         else:
             print(f"Deleting expired cache for {symbol}...")
             file_path.unlink()  # Delete expired file
-    
+
     print(f"Fetching {symbol} data from Yahoo Finance...")
     ticker = Ticker(symbol)
     data = ticker.history(period = period)
-    
+
     if data.empty:
         raise ValueError(f"No data returned for {symbol}")
-    
+
     data.to_csv(file_path)
     return data
 
