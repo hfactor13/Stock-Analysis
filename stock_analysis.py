@@ -155,11 +155,5 @@ def _(forecast, model):
     return
 
 
-@app.cell
-def _():
-    subprocess.run(["python", "notebook2html.py"]) # converts notebook to html
-    return
-
-
 if __name__ == "__main__":
     app.run()
