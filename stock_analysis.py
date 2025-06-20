@@ -80,7 +80,8 @@ def _(text_box):
     # Gets the last 5 years of data for the ticker specified
     ticker = text_box.value
     stock_data = get_stock_data(ticker, period = "5y").iloc[:,1:] # omits symbol column
-    stock_data["date"] = pd.to_datetime(stock_data["date"].apply(lambda x: x[:10]), yearfirst = True)
+    stock_data.reset_index(inplace = True)
+    stock_data["date"] = pd.to_datetime(stock_data["date"].apply(lambda x: x[:10]))
     stock_data
     return (stock_data,)
 
